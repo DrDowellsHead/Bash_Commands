@@ -1,35 +1,38 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "options.h"
 
 // Флаг -b
 // Нумерует только непустые строки
 
 int numbering_non_empty(file) {
-    int number_str = 0;
-    int r;
-    FILE *file_pointer;
+  int number_str = 0;
+  int r;
+  FILE *file_pointer;
 
-    file_pointer = fopen(file, "rw");
+  file = fopen(file, "rw");
 
-    if (file_pointer == NULL) {
-        perror("Ошибка чтения файла");
-        return 1;
+  if (file == NULL) {
+    perror("Ошибка чтения файла");
+    return 1;
+  }
+
+  while (r = fgetc(file) != EOF) {
+    if (strlen(file) != 0) {
+      printf("%d ", number_str);
+      putchar(r);
+
+      if (r == '\n') {
+        number_str++;
+        printf("%d ", number_str);
+      } else {
+        putchar(r);
+      }
     }
+  }
 
-    while (r = fgetc(file_pointer) != EOF) {
-        if (strlen(file_pointer) != 0) {
-            printf("%d ", number_str);
-            putchar(r);
+  fclose(file);
 
-                if (r == '\n') {
-                    number_str++;
-                    printf("%d ", number_str);
-                } else {
-                    putchar(r);
-                }
-        }
-    }
-
-    return 0;
+  return 0;
 }
