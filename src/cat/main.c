@@ -7,7 +7,7 @@
 
 int main(
     int argc,
-    int *argv[]) {  // С помощью argc и argv читаю аргументы командной строки
+    char *argv[]) {  // С помощью argc и argv читаю аргументы командной строки
 
   CatOption options = {0};
   int flag;
@@ -44,4 +44,5 @@ int main(
       }
     }
   }
+  return 0;
 }

@@ -1,4 +1,4 @@
-#ifdef OPTIONS_H
+#ifndef OPTIONS_H
 #define OPTIONS_H
 
 // Структура для работы с флагами команды cat
