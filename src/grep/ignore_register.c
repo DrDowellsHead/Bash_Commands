@@ -2,15 +2,13 @@
 #include <string.h>
 
 #include "options.h"
+// -i Игнорировать регистр
+// Что делает : Ищет без учета больших / маленьких букв
 
-//-e Шаблон
-// Что делает: Позволяет указать несколько шаблонов для поиска
+//     bash
+//         grep -i "hello" file.txt Найдет : "Hello world", "hello everyone"
 
-//                  bash:
-//                  grep -e "hello" - e "world" file.txt
-//     Найдёт строки, содержащие ИЛИ "hello" ИЛИ "world"
-
-int pattern(FILE* file, char* patterns[]) {
+int ignore_register(FILE* file, char pattern) {
     FILE* file_pointer;
     int r;
     char buffer[256];
@@ -23,7 +21,8 @@ int pattern(FILE* file, char* patterns[]) {
     }
 
     while (r = fgets(buffer, sizeof(buffer), file) != EOF) {
-        if (strstr(r, patterns) != NULL) {
+        if (strstr(r, pattern) != NULL &
+            strcasecmp(file, pattern) == 0) {  // Уверен, что не будет работать
             printf("Найдена строка: ", pattern);
         } else {
             printf("Строка не найдена");
