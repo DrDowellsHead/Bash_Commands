@@ -36,3 +36,4 @@ int invert(const char* filename, char pattern) {
 
         return 0;
     }
+}
