@@ -1,23 +1,25 @@
 #include <stdio.h>
+#include <unistd.h>
 
 #include "options.h"
-#define BUFFER \
+#define BUFFER_SIZE \
     32768  // Фиксированный размер буффера для минимизации системных вызовов
 
 int main(int argc, char *argv[]) {
+    char buffer[BUFFER_SIZE];
     GrepOption options = {0};
     int flag;
 
-    if (argc == 0) {  // Нет аргементов - чтение из stdin
-        if (fgets(BUFFER, sizeof(BUFFER), stdin) != NULL) {
-            printf(BUFFER);
+    if (argc == 0) {  // Нет аргументов - чтение из stdin
+        if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+            printf(buffer);
         } else {
             perror("Ошибка чтения файла");
         }
     }
 
-    if (argc > 2) {
-        while (getopt(argc, *argv, "eivclnhsfo")) {
+    if (argc > 1) {
+        while (getopt(argc, *argv, "e:ivclnh:sf:o") != -1) {
             switch (flag) {
                 case 'e':
                     options.pattern = 1;

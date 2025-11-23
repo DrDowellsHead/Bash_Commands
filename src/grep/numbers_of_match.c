@@ -9,13 +9,12 @@
 //   bash grep -
 //       c "hello" file.txt Выведет : 2(нашлось 2 строки с "hello")
 
-int numbers_of_match(FILE* file, char pattern) {
-    FILE* file_pointer;
+int numbers_of_match(const char* filename, char pattern) {
     char r;
     const BUFFER[1024];
     int count = 0;
 
-    file = fopen(file_pointer, "r");
+    FILE* file = fopen(filename, "r");
 
     if (file == NULL) {
         perror("Ошибка чтения файла");

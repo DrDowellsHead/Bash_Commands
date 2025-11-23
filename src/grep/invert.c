@@ -9,22 +9,24 @@
 //     bash grep -v "hello" file.txt Найдет : "Goodbye world", "test line"(все
 //     КРОМЕ строк с "hello")
 
-int invert(FILE* old_file, char pattern) {
-    FILE *old_file_pointer, *new_file_pointer;
+int invert(const char* filename, char pattern) {
+    FILE* new_file_pointer;
     char r;
     const char BUFFER[1024];
 
-    old_file = fopen(old_file_pointer, "r");
-    new_file = fopen(new_file_pointer, "w");
+    FILE* old_file = fopen(filename, "r");
+    FILE* new_file = fopen(new_file_pointer, "w");
 
     if (old_file == NULL) {
-        perror("Ошибка чтения файла");
+        perror("Ошибка открытия файла");
         return 1;
     }
 
-    while (r = fgets(BUFFER, sizeof(BUFFER), old_file) != EOF) {
+    while (r = fgets(BUFFER, sizeof(BUFFER), old_file) != NULL) {
         if (strstr(r, pattern) == NULL) {
             fputs(BUFFER, new_file);
+        } else {
+            perror("Ошибка чтения файла");
         }
 
         fclose(old_file);

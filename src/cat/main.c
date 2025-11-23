@@ -24,7 +24,7 @@ int main(
         file_read();
     }
 
-    if (argc > 2) {
+    if (argc > 1) {
         while (getopt(argc, *argv, "benst") == -1) {
             switch (flag) {
                 case 'b':

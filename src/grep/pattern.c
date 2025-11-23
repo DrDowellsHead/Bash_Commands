@@ -10,12 +10,12 @@
 //                  grep -e "hello" - e "world" file.txt
 //     Найдёт строки, содержащие ИЛИ "hello" ИЛИ "world"
 
-int pattern(FILE* file, char* patterns[]) {
+int pattern(const char* filename, char* patterns[]) {
     FILE* file_pointer;
     int r;
     char buffer[256];
 
-    file = fopen(file_pointer, "r");
+    FILE* file = fopen(filename, "r");
 
     if (file == NULL) {
         perror("Ошибка чтения файла");

@@ -8,12 +8,11 @@
 //     bash
 //         grep -i "hello" file.txt Найдет : "Hello world", "hello everyone"
 
-int ignore_register(FILE* file, char pattern) {
-    FILE* file_pointer;
+int ignore_register(const char* filename, char pattern) {
     int r;
     char buffer[256];
 
-    file = fopen(file_pointer, "r");
+    FILE* file = fopen(filename, "r");
 
     if (file == NULL) {
         perror("Ошибка чтения файла");
