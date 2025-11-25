@@ -6,33 +6,14 @@
 // Флаг -b
 // Нумерует только непустые строки
 
-int numbering_non_empty(file) {
-    int number_str = 0;
-    int r;
-    FILE *file_pointer;
+int numbering_non_empty(char *line, CatOption *options, int *line_number) {
 
-    file = fopen(file, "rw");
-
-    if (file == NULL) {
-        perror("Ошибка чтения файла");
-        return 1;
+    if (line[0] != '\n' && line[0] != '\0') {
+        // %6d - спецификатор формата для целого числа со знаком в десятичной системе и выравниваем по правому краю
+        printf("%6d ", (*line_number)++);
+    } else {
+        printf(" ");
     }
-
-    while (r = fgetc(file) != EOF) {
-        if (strlen(file) != 0) {
-            printf("%d ", number_str);
-            putchar(r);
-
-            if (r == '\n') {
-                number_str++;
-                printf("%d ", number_str);
-            } else {
-                putchar(r);
-            }
-        }
-    }
-
-    fclose(file);
 
     return 0;
 }

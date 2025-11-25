@@ -1,14 +1,11 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <unistd.h>  // Для getopt
-
 #include "options.h"
-#define BUFFER \
-    32768  // Фиксированный размер буффера для минимизации системных вызовов
+
 
 int main(int argc,
-         char *argv[]) {  // С помощью argc и argv читаю аргументы командной
-                          // строки
+         char *argv[]) {  // С помощью argc и argv читаю аргументы командной строки
 
     CatOption options = {0};
     int flag;
