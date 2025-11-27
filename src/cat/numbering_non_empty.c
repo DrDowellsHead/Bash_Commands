@@ -6,10 +6,10 @@
 // Флаг -b
 // Нумерует только непустые строки
 
-int numbering_non_empty(char *line, CatOption *options, int *line_number) {
-
+int numbering_non_empty(char* line, CatOption* options, int* line_number) {
     if (line[0] != '\n' && line[0] != '\0') {
-        // %6d - спецификатор формата для целого числа со знаком в десятичной системе и выравниваем по правому краю
+        // %6d - спецификатор формата для целого числа со знаком в десятичной
+        // системе и выравниваем по правому краю
         printf("%6d ", (*line_number)++);
     } else {
         printf(" ");

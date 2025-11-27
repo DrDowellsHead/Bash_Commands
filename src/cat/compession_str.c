@@ -6,7 +6,7 @@
 // Флаг -s
 // Сжимает несколько смежных пустых строк
 
-int compession_str(char *line, CatOption *options, int *last_empty) {
+int compession_str(char* line, CatOption* options, int* last_empty) {
     // Проверка на пустую строку
     int is_empty = (line[0] == '\n' || line == '\0');
 

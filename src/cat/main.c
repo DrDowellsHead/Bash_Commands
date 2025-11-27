@@ -1,11 +1,12 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <unistd.h>  // Для getopt
+
 #include "options.h"
 
-
-int main(int argc,
-         char *argv[]) {  // С помощью argc и argv читаю аргументы командной строки
+int main(
+    int argc,
+    char* argv[]) {  // С помощью argc и argv читаю аргументы командной строки
 
     CatOption options = {0};
     int flag;
