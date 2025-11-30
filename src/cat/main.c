@@ -13,7 +13,7 @@ int main(
 
     // Обработка флагов. Если нет флагов, то getopt возвращает -1, а optind
     // указыввает на следующую строку после всех аргументов
-    while (getopt(argc, argv, "benstET") != -1) {
+    while ((flag = getopt(argc, argv, "benstET")) != -1) {
         switch (flag) {
             case 'b':
                 options.numbering_non_empty = 1;

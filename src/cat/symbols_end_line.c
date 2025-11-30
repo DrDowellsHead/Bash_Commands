@@ -11,7 +11,7 @@ int symbols_end_line(char* line, CatOption* options) {
 
     if (len > 0 && line[len - 1] == '\n') {
         line[len - 1] = '\0';
-        strcat(line, "&\n");
+        strcat(line, "$\n");
     }
 
     return 0;

@@ -17,7 +17,7 @@ void file_read(const char* filename, CatOption* options) {
         file = fopen(filename, "r");
         if (file == NULL) {
             perror("Ошибка чтения файла");
-            return 1;
+            return;
         }
     }
 
