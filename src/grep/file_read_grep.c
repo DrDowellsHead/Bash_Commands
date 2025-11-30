@@ -4,45 +4,50 @@
 
 #include "options.h"
 
+// Фиксированный размер буфера для оптимизации системных вызовов
 #define BUFFER_SIZE 32768
 
-void file_read_grep(const char* filename, GrepOption* options, const char* pattern) {
+void file_read_grep(const char* filename, GrepOptions* options) {
     FILE* file;
     char buffer[BUFFER_SIZE];
     int line_number = 0;
+    int match_count = 0;
 
     if (filename == NULL) {
         file = stdin;
     } else {
         file = fopen(filename, "r");
         if (file == NULL) {
-            quiet_mode(filename, pattern, options);
+            if (!options->silent_mode) perror(filename);
             return;
         }
     }
 
-    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+    while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
         line_number++;
-        
-        if (options->ignore_regiser) {
-            ignore_register(filename, pattern, options);
-        } else if (options->invert) {
-            invert(filename, pattern, options);
-        } else if (options->numbers_of_match) {
-            numbers_of_match(filename, pattern, options);
-        } else if (options->match_files_names) {
-            match_files_names(filename, pattern, options);
-        } else if (options->number_of_string) {
-            number_of_string(filename, pattern, options);
-        } else if (options->no_name_files) {
-            no_name_files(filename, pattern, options);
-        } else if (options->pattern_from_file) {
-            pattern_from_file(filename, pattern, options);
-        } else if (options->only_match) {
-            only_match(filename, pattern, options);
-        } else if (options->pattern) {
-            pattern(filename, pattern, options);
+
+        if (is_match(buffer, options)) {
+            match_count++;
+
+            if (options->files_with_matches) {
+                print_filename(filename, options);
+                break;
+            }
+
+            if (options->count_only) {
+                continue;
+            }
+
+            if (options->only_matching) {
+                print_only_matches(filename, line_number, buffer, options);
+            } else {
+                print_line(filename, line_number, buffer, options);
+            }
         }
+    }
+
+    if (options->count_only) {
+        print_count(filename, match_count, options);
     }
 
     if (file != stdin) {

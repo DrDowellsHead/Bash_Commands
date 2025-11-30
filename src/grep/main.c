@@ -1,77 +1,57 @@
+#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-#include <getopt.h>
 
 #include "options.h"
 
 int main(int argc, char* argv[]) {
-    GrepOption options = {0};
-    char* pattern = NULL;
-    int flag;
+    GrepOptions options;
+    initialize_options(&options);
 
-    while ((flag = getopt(argc, argv, "e:ivclnhsf:o")) != -1) {
-        switch (flag) {
+    // Обработка флагов. optarg принимает в себя первое значение после флага
+    int opt;
+    while ((opt = getopt(argc, argv, "e:ivclnhsf:o")) != -1) {
+        switch (opt) {
             case 'e':
-                options.pattern = 1;
-                pattern = optarg;
+                handle_e_flag(&options, optarg);
                 break;
             case 'i':
-                options.ignore_regiser = 1;
+                handle_i_flag(&options);
                 break;
             case 'v':
-                options.invert = 1;
+                handle_v_flag(&options);
                 break;
             case 'c':
-                options.numbers_of_match = 1;
+                handle_c_flag(&options);
                 break;
             case 'l':
-                options.match_files_names = 1;
+                handle_l_flag(&options);
                 break;
             case 'n':
-                options.number_of_string = 1;
+                handle_n_flag(&options);
                 break;
             case 'h':
-                options.no_name_files = 1;
+                handle_h_flag(&options);
                 break;
             case 's':
-                options.quiet_mode = 1;
+                handle_s_flag(&options);
                 break;
             case 'f':
-                options.pattern_from_file = 1;
-                pattern = optarg;
+                handle_f_flag(&options, optarg);
                 break;
             case 'o':
-                options.only_match = 1;
+                handle_o_flag(&options);
                 break;
+
             default:
-                if (!options.quiet_mode) {
-                    fprintf(stderr, "Недопостуимый флаг\n");
-                }
+                cleanup_options(&options);
                 return 1;
         }
     }
 
-    if (pattern == NULL && optind < argc) {
-        pattern = argv[optind];
-        optind++;
-    }
-
-    if (pattern == NULL) {
-        if (!options.quiet_mode) {
-            fprintf(stderr, "Не указан шаблон для поиска\n");
-        }
-        return 1;
-    }
-
-    if (optind >= argc) {
-        file_read_grep(NULL, &options, pattern);
-    } else {
-        for (int i = optind; i < argc; i++) {
-            file_read_grep(argv[i], &options, pattern);
-        }
-    }
+    process_arguments(&options, argc, argv);
+    cleanup_options(&options);
 
     return 0;
 }

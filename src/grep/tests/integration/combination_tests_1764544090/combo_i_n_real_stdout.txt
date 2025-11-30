@@ -1,0 +1,5 @@
+1:Case Sensitive
+2:case sensitive
+3:CASE SENSITIVE
+4:CaSe SeNsItIvE
+5:this is a CASE test
