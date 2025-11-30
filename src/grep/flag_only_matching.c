@@ -26,22 +26,24 @@ void print_only_matches(const char* filename, int line_num, const char* line,
 
             if (!match) break;
 
-            if (filename && !options->no_filename) {
+            // Определяем, нужно ли выводить имя файла
+            int print_filename = 0;
+            if (filename) {
+                if (!options->no_filename) {
+                    print_filename = 1;
+                }
+            }
+
+            if (print_filename) {
                 printf("%s", filename);
                 if (options->line_number) {
                     printf(":");
-                } else {
-                    printf(": ");
                 }
             }
 
             if (options->line_number) {
                 printf("%d", line_num);
                 printf(":");
-            }
-
-            if (!options->no_filename && options->line_number) {
-                printf(" ");
             }
 
             fwrite(match, 1, len, stdout);

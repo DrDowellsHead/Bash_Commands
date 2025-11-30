@@ -4,13 +4,22 @@
 
 #include "options.h"
 
-void process_arguments(GrepOptions* options, int argc, char** argv) {
+int process_arguments(GrepOptions* options, int argc, char** argv) {
     if (options->pattern_count == 0 && optind < argc) {
         add_pattern(options, argv[optind++]);
     }
 
+    // Проверка наличия шаблонов
     if (!validate_patterns(options)) {
-        return;
+        return 1;
+    }
+
+    // Определяем, сколько файлов будет обрабатываться
+    int file_count = argc - optind;
+
+    // Если указан только один файл, по умолчанию не выводим имя файла
+    if (file_count == 1 && !options->no_filename) {
+        options->no_filename = 1;
     }
 
     if (optind >= argc) {
@@ -20,6 +29,8 @@ void process_arguments(GrepOptions* options, int argc, char** argv) {
             file_read_grep(argv[i], options);
         }
     }
+
+    return 0;
 }
 
 int validate_patterns(GrepOptions* options) {

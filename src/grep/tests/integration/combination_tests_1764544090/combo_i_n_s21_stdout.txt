@@ -1,5 +1,0 @@
-../test_files/mixed_case.txt:1: Case Sensitive
-../test_files/mixed_case.txt:2: case sensitive
-../test_files/mixed_case.txt:3: CASE SENSITIVE
-../test_files/mixed_case.txt:4: CaSe SeNsItIvE
-../test_files/mixed_case.txt:5: this is a CASE test

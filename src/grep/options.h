@@ -50,6 +50,7 @@ typedef struct {
     int pattern_from_file;   // Флаг -f
     int only_matching;       // Флаг -o
     int pattern_flag;        // Флаг -e
+    int file_count;          // Количество обрабатываемых файлов
 
     char** patterns;
     int pattern_count;
@@ -60,7 +61,7 @@ void initialize_options(GrepOptions* options);
 void cleanup_options(GrepOptions* options);
 
 // Обработка аргументов
-void process_arguments(GrepOptions* options, int argc, char** argv);
+int process_arguments(GrepOptions* options, int argc, char** argv);
 int validate_patterns(GrepOptions* options);
 
 // Чтение файлов
