@@ -19,6 +19,7 @@ rebuild: clean all
 
 # Тестирование
 test: $(TARGET)
+	chmod +x test_cat.sh
 	./test_cat.sh
 
 .PHONY: all clean rebuild test

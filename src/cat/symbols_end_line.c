@@ -7,6 +7,8 @@
 // Отображает символы конца строки как $
 
 int symbols_end_line(char* line, CatOption* options) {
+    (void)options;
+
     size_t len = strlen(line);
 
     if (len > 0 && line[len - 1] == '\n') {

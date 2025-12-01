@@ -9,6 +9,8 @@
 // Также отображает табы как ^I
 
 int view_tabs(char* line, CatOption* options) {
+    (void)options;
+
     int j = 0;
     char output[BUFFER_SIZE];
 
