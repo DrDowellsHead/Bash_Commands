@@ -11,12 +11,14 @@ passed_tests=0
 compare_output() {
     local test_name="$1"
     local flags="$2"
-    local file="$3"
+    shift 2
+    local files="$@"
     
     ((total_tests++))
     
-    ./s21_cat $flags "$file" > our_output.txt 2>&1
-    cat $flags "$file" > std_output.txt 2>&1
+    # Используем массив для правильной передачи файлов
+    ./s21_cat $flags $files > our_output.txt 2>&1
+    cat $flags $files > std_output.txt 2>&1
     
     if diff -q our_output.txt std_output.txt > /dev/null; then
         echo -e "${GREEN}✓ PASS${NC}: $test_name"
@@ -25,7 +27,7 @@ compare_output() {
     else
         echo -e "${RED}✗ FAIL${NC}: $test_name"
         echo "Flags: $flags"
-        echo "File: $file"
+        echo "Files: $files"
         return 1
     fi
 }
@@ -69,11 +71,12 @@ for triple in "${triples[@]}"; do
     compare_output "Triple $triple" "$triple" "test_mixed.txt"
 done
 
-# Тестируем несколько файлов
+# Тестируем несколько файлов - ИСПРАВЛЕНО!
 echo -e "\n${YELLOW}Тестирование нескольких файлов:${NC}"
 
-compare_output "Multiple files basic" "-n" "test_basic.txt test_empty.txt"
-compare_output "Multiple files with flags" "-b -e" "test_tabs.txt test_mixed.txt"
+# Без кавычек вокруг нескольких файлов!
+compare_output "Multiple files basic" "-n" test_basic.txt test_empty.txt
+compare_output "Multiple files with flags" "-b -e" test_tabs.txt test_mixed.txt
 
 # Специальные случаи
 echo -e "\n${YELLOW}Специальные случаи:${NC}"

@@ -10,7 +10,7 @@ typedef struct {
     int view_tabs;            // flag t
 } CatOption;
 
-void file_read(const char* filename, CatOption* options);
+void file_read(const char* filename, CatOption* options, int* line_number, int* last_empty);
 int numbering_non_empty(char* line, CatOption* options, int* line_number);
 int symbols_end_line(char* line, CatOption* options);
 int numbering_all_str(char* line, CatOption* options, int* line_number);

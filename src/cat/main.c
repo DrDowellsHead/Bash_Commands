@@ -4,12 +4,13 @@
 
 #include "options.h"
 
-int main(
-    int argc,
-    char* argv[]) {  // С помощью argc и argv читаю аргументы командной строки
+// С помощью argc и argv читаю аргументы командной строки
 
+int main(int argc, char* argv[]) {
     CatOption options = {0};
     int flag;
+    int line_number = 1;  // Общий счетчик для всех файлов
+    int last_empty = 0;   // Общее состояние для флага -s
 
     // Обработка флагов. Если нет флагов, то getopt возвращает -1, а optind
     // указыввает на следующую строку после всех аргументов
@@ -43,10 +44,11 @@ int main(
     }
 
     if (optind >= argc) {
-        file_read(NULL, &options);  // Аргументов нет - вывод из stdin
+        file_read(NULL, &options, &line_number,
+                  &last_empty);  // Аргументов нет - вывод из stdin
     } else {
         for (int i = optind; i < argc; i++) {
-            file_read(argv[i], &options);
+            file_read(argv[i], &options, &line_number, &last_empty);
         }
     }
 
