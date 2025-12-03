@@ -6,31 +6,19 @@
 // Флаг -s
 // Сжимает несколько смежных пустых строк
 
-int compession_str(file) {
-    int r;
-    FILE *old_file, *new_file;
-    const char BUFFER[1024];
+int compession_str(char* line, CatOption* options, int* last_empty) {
+    (void)options;
 
-    old_file = fopen(file, "r");
-    new_file = fopen(file, "w");
+    // Проверка на пустую строку
+    int is_empty = (line[0] == '\n' || line[0] == '\0');
 
-    if (old_file == NULL || new_file == NULL) {
-        perror("Ошибка открытия файла");
-        return 1;
+    // Если шаблон пустой строки равен пустой строке, то выводим её
+    if (is_empty && *last_empty) {
+        return 0;
     }
 
-    while (r = fgets(BUFFER, sizeof(BUFFER), old_file) != EOF) {
-        if (strlen(old_file) != 0) {
-            fputs(BUFFER, new_file);
-        } else {
-            fputc('\n', new_file);
-        }
-    }
+    // Запоминаем состояние для следующей строки
+    *last_empty = is_empty;
 
-    fclose(old_file);
-    fclose(new_file);
-
-    remove(old_file);
-
-    return 0;
+    return 1;
 }

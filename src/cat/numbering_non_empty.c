@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -6,33 +7,25 @@
 // Флаг -b
 // Нумерует только непустые строки
 
-int numbering_non_empty(file) {
-    int number_str = 0;
-    int r;
-    FILE *file_pointer;
+int numbering_non_empty(char* line, CatOption* options, int* line_number) {
+    (void)options;
 
-    file = fopen(file, "rw");
+    int is_empty = 1;
 
-    if (file == NULL) {
-        perror("Ошибка чтения файла");
-        return 1;
-    }
-
-    while (r = fgetc(file) != EOF) {
-        if (strlen(file) != 0) {
-            printf("%d ", number_str);
-            putchar(r);
-
-            if (r == '\n') {
-                number_str++;
-                printf("%d ", number_str);
-            } else {
-                putchar(r);
-            }
+    for (int i = 0; line[i] != '\0' && line[i] != '\n'; i++) {
+        if (!isspace((unsigned char)line[i])) {
+            is_empty = 0;
+            break;
         }
     }
 
-    fclose(file);
+    if (line[0] == '\n' || line[0] == '\0') {
+        is_empty = 1;
+    }
+
+    if (!is_empty) {
+        printf("%6d\t", (*line_number)++);
+    }
 
     return 0;
 }

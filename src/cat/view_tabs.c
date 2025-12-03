@@ -1,30 +1,30 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "options.h"
+
+#define BUFFER_SIZE 32768
 
 // Флаг -t
 // Также отображает табы как ^I
 
-int view_tabs(file) {
-    int r;
-    FILE *file_pointer;
+int view_tabs(char* line, CatOption* options) {
+    (void)options;
 
-    file = fopen(file_pointer, "rw");
+    int j = 0;
+    char output[BUFFER_SIZE];
 
-    if (file == NULL) {
-        perror("Ошибка чтения файла");
-        return 1;
-    }
-
-    while (r = getc(file) != EOF) {
-        if (r == '\\t') {
-            printf("^I");
+    for (int i = 0; line[i] != '\0' && j < BUFFER_SIZE; i++) {
+        if (line[i] == '\t') {
+            output[j++] = '^';
+            output[j++] = 'I';
         } else {
-            putchar(r);
+            output[j++] = line[i];
         }
     }
+    output[j] = '\0';
 
-    fclose(file);
+    strcpy(line, output);
 
     return 0;
 }

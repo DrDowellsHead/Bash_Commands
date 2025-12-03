@@ -1,29 +1,20 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "options.h"
 
 // Флаг -e
 // Отображает символы конца строки как $
 
-int symbols_end_line(file) {
-    int r;
-    FILE *file_pointer;
+int symbols_end_line(char* line, CatOption* options) {
+    (void)options;
 
-    file = fopen(file_pointer, "rw");
+    size_t len = strlen(line);
 
-    if (file == NULL) {
-        perror("Ошибка чтения файла");
-        return 1;
+    if (len > 0 && line[len - 1] == '\n') {
+        line[len - 1] = '\0';
+        strcat(line, "$\n");
     }
-
-    while (r = fgetc(file) != EOF) {
-        putchar(r);
-        if (r == '\n') {
-            printf(" $");
-        }
-    }
-
-    fclose(file);
 
     return 0;
 }

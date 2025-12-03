@@ -55,5 +55,8 @@ dkms.conf
 # Style
 *.clang-format
 
+#txt-files
+*.txt
+
 # Other
 .vscode
