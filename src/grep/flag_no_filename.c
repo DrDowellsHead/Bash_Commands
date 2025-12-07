@@ -21,11 +21,11 @@ void print_line(const char* filename, int line_num, const char* line,
     }
 
     if (print_filename) {
-        printf("%s", filename);
+        printf("%s:", filename);
     }
 
     if (options->line_number) {
-        printf("%d", line_num);
+        printf("%d:", line_num);
     }
 
     printf("%s", line);

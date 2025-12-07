@@ -58,7 +58,7 @@ int process_arguments(GrepOptions* options, int argc, char** argv);
 int validate_patterns(GrepOptions* options);
 
 // Чтение файлов
-void file_read_grep(const char* filename, GrepOptions* options);
+void file_read_grep(const char* filename, GrepOptions* options, int* any_match, int* any_error);
 
 // Функции для флагов
 void handle_e_flag(GrepOptions* options, const char* optarg);

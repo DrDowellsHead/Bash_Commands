@@ -54,6 +54,10 @@ run_test() {
     sed -i 's/[[:space:]]*$//' s21_output.txt
     sed -i 's/[[:space:]]*$//' grep_output.txt
     
+    # Удалим возможные лишние двоеточия (для приведения к одному формату)
+    sed -i 's/::/:/g' s21_output.txt
+    sed -i 's/::/:/g' grep_output.txt
+    
     # Сравниваем выходные данные
     if diff -q s21_output.txt grep_output.txt > /dev/null; then
         # Сравниваем коды возврата
@@ -74,7 +78,7 @@ run_test() {
         echo "s21_grep exit code: $s21_exit" >> $LOG_FILE
         echo "grep exit code: $grep_exit" >> $LOG_FILE
         echo "-------------------" >> $LOG_FILE
-        return 1
+        return 2
     fi
 }
 
@@ -85,81 +89,187 @@ echo "=========================" >> $LOG_FILE
 total_tests=0
 passed_tests=0
 warn_tests=0
+failed_tests=0
 
 echo "=== Запуск тестов s21_grep ==="
 
 # Базовые тесты
 echo "=== Базовые тесты ==="
-run_test "Простой поиск" "test $TEST_DIR/file1.txt" "test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Простой поиск" "test $TEST_DIR/file1.txt" "test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Поиск нескольких файлов" "test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Поиск нескольких файлов" "test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "test $TEST_DIR/file1.txt $TEST_DIR/file2.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
 # Тесты с флагами
 echo "=== Тесты с флагами ==="
 
-run_test "Флаг -i (игнорировать регистр)" "-i TEST $TEST_DIR/file1.txt" "-i TEST $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -i (игнорировать регистр)" "-i TEST $TEST_DIR/file1.txt" "-i TEST $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -v (инвертировать)" "-v test $TEST_DIR/file1.txt" "-v test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -v (инвертировать)" "-v test $TEST_DIR/file1.txt" "-v test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -c (количество)" "-c test $TEST_DIR/file1.txt" "-c test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -c (количество)" "-c test $TEST_DIR/file1.txt" "-c test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -l (только имена файлов)" "-l test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-l test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -l (только имена файлов)" "-l test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-l test $TEST_DIR/file1.txt $TEST_DIR/file2.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -n (номера строк)" "-n test $TEST_DIR/file1.txt" "-n test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -n (номера строк)" "-n test $TEST_DIR/file1.txt" "-n test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -h (без имен файлов)" "-h test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-h test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -h (без имен файлов)" "-h test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-h test $TEST_DIR/file1.txt $TEST_DIR/file2.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -s (тихий режим)" "-s pattern $TEST_DIR/nonexistent.txt" "-s pattern $TEST_DIR/nonexistent.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -s (тихий режим)" "-s pattern $TEST_DIR/nonexistent.txt" "-s pattern $TEST_DIR/nonexistent.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -e (шаблон)" "-e test $TEST_DIR/file1.txt" "-e test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -e (шаблон)" "-e test $TEST_DIR/file1.txt" "-e test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -f (шаблоны из файла)" "-f $TEST_DIR/patterns.txt $TEST_DIR/file1.txt" "-f $TEST_DIR/patterns.txt $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -f (шаблоны из файла)" "-f $TEST_DIR/patterns.txt $TEST_DIR/file1.txt" "-f $TEST_DIR/patterns.txt $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаг -o (только совпадения)" "-o test $TEST_DIR/file1.txt" "-o test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаг -o (только совпадения)" "-o test $TEST_DIR/file1.txt" "-o test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
 # Тесты с комбинациями флагов
 echo "=== Тесты с комбинациями флагов ==="
 
-run_test "Флаги -i и -v" "-iv TEST $TEST_DIR/file1.txt" "-iv TEST $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаги -i и -v" "-iv TEST $TEST_DIR/file1.txt" "-iv TEST $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаги -n и -i" "-ni test $TEST_DIR/file1.txt" "-ni test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаги -n и -i" "-ni test $TEST_DIR/file1.txt" "-ni test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаги -c и -v" "-cv test $TEST_DIR/file1.txt" "-cv test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаги -c и -v" "-cv test $TEST_DIR/file1.txt" "-cv test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаги -l и -c" "-cl test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-cl test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаги -l и -c" "-cl test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-cl test $TEST_DIR/file1.txt $TEST_DIR/file2.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаги -n и -o" "-no test $TEST_DIR/file1.txt" "-no test $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаги -n и -o" "-no test $TEST_DIR/file1.txt" "-no test $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Флаги -h и -n" "-hn test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-hn test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Флаги -h и -n" "-hn test $TEST_DIR/file1.txt $TEST_DIR/file2.txt" "-hn test $TEST_DIR/file1.txt $TEST_DIR/file2.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
 # Тесты с регулярными выражениями
 echo "=== Тесты с регулярными выражениями ==="
 
-run_test "Регулярное выражение ." "'t.st' $TEST_DIR/file1.txt" "'t.st' $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Регулярное выражение ." "'t.st' $TEST_DIR/file1.txt" "'t.st' $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Регулярное выражение с ^" "'^test' $TEST_DIR/file1.txt" "'^test' $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Регулярное выражение с ^" "'^test' $TEST_DIR/file1.txt" "'^test' $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
-run_test "Регулярное выражение с []" "'[ТT]est' $TEST_DIR/file1.txt" "'[ТT]est' $TEST_DIR/file1.txt" && ((passed_tests++)) || ((warn_tests++))
+run_test "Регулярное выражение с []" "'[ТT]est' $TEST_DIR/file1.txt" "'[ТT]est' $TEST_DIR/file1.txt"
+case $? in
+    0) ((passed_tests++));;
+    1) ((warn_tests++));;
+    2) ((failed_tests++));;
+esac
 ((total_tests++))
 
 # Тесты со stdin
@@ -172,6 +282,7 @@ if diff -q s21_output.txt grep_output.txt > /dev/null; then
     ((passed_tests++))
 else
     echo -e "${RED}FAIL${NC}: Чтение из stdin"
+    ((failed_tests++))
 fi
 ((total_tests++))
 
@@ -184,13 +295,20 @@ echo "================================"
 echo "Итоги тестирования:"
 echo "Всего тестов: $total_tests"
 echo -e "${GREEN}Пройдено: $passed_tests${NC}"
-echo -e "${YELLOW}Предупреждений: $warn_tests${NC}"
-echo -e "${RED}Провалено: $((total_tests - passed_tests - warn_tests))${NC}"
+if [ $warn_tests -gt 0 ]; then
+    echo -e "${YELLOW}Предупреждений: $warn_tests${NC}"
+fi
+if [ $failed_tests -gt 0 ]; then
+    echo -e "${RED}Провалено: $failed_tests${NC}"
+fi
 
-if [ $passed_tests -eq $total_tests ]; then
+if [ $failed_tests -eq 0 ] && [ $warn_tests -eq 0 ]; then
     echo -e "${GREEN}✓ Все тесты пройдены успешно!${NC}"
     exit 0
+elif [ $failed_tests -eq 0 ]; then
+    echo -e "${YELLOW}⚠ Есть предупреждения. Проверьте $LOG_FILE для деталей${NC}"
+    exit 0
 else
-    echo -e "${YELLOW}⚠ Есть несоответствия. Проверьте $LOG_FILE для деталей${NC}"
+    echo -e "${RED}✗ Есть проваленные тесты. Проверьте $LOG_FILE для деталей${NC}"
     exit 1
 fi

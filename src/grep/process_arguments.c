@@ -5,20 +5,24 @@
 #include "options.h"
 
 int process_arguments(GrepOptions* options, int argc, char** argv) {
+    int exit_code = 0;
+    int any_match = 0;
+    int any_error = 0;
+
     if (options->pattern_count == 0 && optind < argc) {
         add_pattern(options, argv[optind++]);
     }
 
     // Проверка наличия шаблонов
     if (!validate_patterns(options)) {
-        return 1;
+        return 2;
     }
 
     if (!compile_regex(options)) {
         if (!options->silent_mode) {
             fprintf(stderr, "Недопустимый шаблон регулярного выражения\n");
         }
-        return 1;
+        return 2;
     }
 
     // Определяем, сколько файлов будет обрабатываться
@@ -31,14 +35,31 @@ int process_arguments(GrepOptions* options, int argc, char** argv) {
     }
 
     if (optind >= argc) {
-        file_read_grep(NULL, options);
+        file_read_grep(NULL, options, &any_match, &any_error);
     } else {
         for (int i = optind; i < argc; i++) {
-            file_read_grep(argv[i], options);
+            int file_has_match = 0;
+            int file_error = 0;
+            file_read_grep(argv[i], options, &file_has_match, &file_error);
+
+            if (file_error) {
+                any_error = 1;
+            }
+            if (file_has_match) {
+                any_match = 1;
+            }
         }
     }
 
-    return 0;
+    if (any_error) {
+        exit_code = 2;
+    } else if (!any_match) {
+        exit_code = 1;
+    } else {
+        exit_code = 0;
+    }
+
+    return exit_code;
 }
 
 int validate_patterns(GrepOptions* options) {
