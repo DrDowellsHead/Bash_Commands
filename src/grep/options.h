@@ -1,42 +1,33 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include <regex.h>
 #include <stdio.h>
 
 // Опции Описание
 
-//     1 -
-//     e Шаблон.
+//     1 -e Шаблон.
 
-//     2 -
-//     i Игнорирует различия регистра.
+//     2 -i Игнорирует различия регистра.
 
-//     3 -
-//     v Инвертирует смысл поиска соответствий.
+//     3 -v Инвертирует смысл поиска соответствий.
 
-//     4 -
-//     c Выводит только количество совпадающих строк.
+//     4 -c Выводит только количество совпадающих строк.
 
-//     5 -
-//     l Выводит только совпадающие файлы.
+//     5 -l Выводит только совпадающие файлы.
 
-//     6 -
-//     n Предваряет каждую строку вывода номером строки из файла ввода.
+//     6 -n Предваряет каждую строку вывода номером строки из файла ввода.
 
-//     7 -
-//     h Выводит совпадающие строки,
+//     7 -h Выводит совпадающие строки,
 //     не предваряя их именами файлов.
 
-//         8 -
-//         s Подавляет сообщения об ошибках о несуществующих или нечитаемых
+//     8 -s Подавляет сообщения об ошибках о несуществующих или нечитаемых
 //         файлах.
 
-//         9 -
-//         f file Получает регулярные выражения из файла.
+//     9 -f file Получает регулярные выражения из файла.
 
-//         10 -
-//         o Печатает только совпадающие(непустые)
-// части совпавшей строки.
+//     10 -o Печатает только совпадающие(непустые)
+//      части совпавшей строки.
 
 // Структура для работы с флагами команды grep
 typedef struct {
@@ -54,6 +45,8 @@ typedef struct {
 
     char** patterns;
     int pattern_count;
+    regex_t* regexes;
+    int regex_compiled;
 } GrepOptions;
 
 // Для инициализации и очистки от опций
@@ -89,5 +82,11 @@ void print_only_matches(const char* filename, int line_num, const char* line,
 void print_count(const char* filename, int count, GrepOptions* options);
 void print_filename(const char* filename, GrepOptions* options);
 char* my_strcasestr(const char* haystack, const char* needle);
+
+int compile_regex(GrepOptions* options);
+int regex_match(const char* line, GrepOptions* options, regmatch_t* match);
+void print_only_matches(const char* filename, int line_num, const char* line,
+                        GrepOptions* options);
+void free_regex(GrepOptions* options);
 
 #endif

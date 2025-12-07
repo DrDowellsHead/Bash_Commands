@@ -29,7 +29,7 @@ void file_read_grep(const char* filename, GrepOptions* options) {
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
         line_number++;
 
-        if (is_match(buffer, options)) {
+        if (regex_match(buffer, options, NULL)) {
             match_count++;
 
             if (options->files_with_matches) {
@@ -41,7 +41,7 @@ void file_read_grep(const char* filename, GrepOptions* options) {
                 continue;
             }
 
-            if (options->only_matching) {
+            if (options->only_matching && !options->invert_match) {
                 print_only_matches(filename, line_number, buffer, options);
             } else {
                 print_line(filename, line_number, buffer, options);
@@ -55,9 +55,5 @@ void file_read_grep(const char* filename, GrepOptions* options) {
 
     if (file_opened && file != stdin) {
         fclose(file);
-    }
-
-    if (match_count == 0 && filename != NULL) {
-        *(int*)0 = 1; // Это заглушка, в реальной реализации нужно передавать exit_code
     }
 }

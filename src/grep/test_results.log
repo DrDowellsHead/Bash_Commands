@@ -1,0 +1,135 @@
+Тестовый прогон: Вс 07 дек 2025 16:35:35 MSK
+=========================
+Test: Простой поиск
+Command: test test_files/file1.txt
+[0;32mPASS[0m: Простой поиск
+Exit codes match: 0
+Test: Поиск нескольких файлов
+Command: test test_files/file1.txt test_files/file2.txt
+[0;31mFAIL[0m: Поиск нескольких файлов
+--- Output diff ---
+1,3c1,3
+< test_files/file1.txttest 3: в нижнем регистре
+< test_files/file1.txttest with multiple test words test
+< test_files/file2.txttest lowercase in second file
+---
+> test_files/file1.txt:test 3: в нижнем регистре
+> test_files/file1.txt:test with multiple test words test
+> test_files/file2.txt:test lowercase in second file
+s21_grep exit code: 0
+grep exit code: 0
+-------------------
+Test: Флаг -i (игнорировать регистр)
+Command: -i TEST test_files/file1.txt
+[0;32mPASS[0m: Флаг -i (игнорировать регистр)
+Exit codes match: 0
+Test: Флаг -v (инвертировать)
+Command: -v test test_files/file1.txt
+[0;32mPASS[0m: Флаг -v (инвертировать)
+Exit codes match: 0
+Test: Флаг -c (количество)
+Command: -c test test_files/file1.txt
+[0;32mPASS[0m: Флаг -c (количество)
+Exit codes match: 0
+Test: Флаг -l (только имена файлов)
+Command: -l test test_files/file1.txt test_files/file2.txt
+[0;32mPASS[0m: Флаг -l (только имена файлов)
+Exit codes match: 0
+Test: Флаг -n (номера строк)
+Command: -n test test_files/file1.txt
+[0;31mFAIL[0m: Флаг -n (номера строк)
+--- Output diff ---
+1,2c1,2
+< 3test 3: в нижнем регистре
+< 6test with multiple test words test
+---
+> 3:test 3: в нижнем регистре
+> 6:test with multiple test words test
+s21_grep exit code: 0
+grep exit code: 0
+-------------------
+Test: Флаг -h (без имен файлов)
+Command: -h test test_files/file1.txt test_files/file2.txt
+[0;32mPASS[0m: Флаг -h (без имен файлов)
+Exit codes match: 0
+Test: Флаг -s (тихий режим)
+Command: -s pattern test_files/nonexistent.txt
+[1;33mWARN[0m: Флаг -s (тихий режим) - exit codes differ (s21: 0, grep: 2)
+s21_grep exit code: 0
+grep exit code: 2
+Test: Флаг -e (шаблон)
+Command: -e test test_files/file1.txt
+[0;32mPASS[0m: Флаг -e (шаблон)
+Exit codes match: 0
+Test: Флаг -f (шаблоны из файла)
+Command: -f test_files/patterns.txt test_files/file1.txt
+[0;32mPASS[0m: Флаг -f (шаблоны из файла)
+Exit codes match: 0
+Test: Флаг -o (только совпадения)
+Command: -o test test_files/file1.txt
+[0;32mPASS[0m: Флаг -o (только совпадения)
+Exit codes match: 0
+Test: Флаги -i и -v
+Command: -iv TEST test_files/file1.txt
+[0;32mPASS[0m: Флаги -i и -v
+Exit codes match: 0
+Test: Флаги -n и -i
+Command: -ni test test_files/file1.txt
+[0;31mFAIL[0m: Флаги -n и -i
+--- Output diff ---
+1,2c1,2
+< 3test 3: в нижнем регистре
+< 6test with multiple test words test
+---
+> 3:test 3: в нижнем регистре
+> 6:test with multiple test words test
+s21_grep exit code: 0
+grep exit code: 0
+-------------------
+Test: Флаги -c и -v
+Command: -cv test test_files/file1.txt
+[0;32mPASS[0m: Флаги -c и -v
+Exit codes match: 0
+Test: Флаги -l и -c
+Command: -cl test test_files/file1.txt test_files/file2.txt
+[0;31mFAIL[0m: Флаги -l и -c
+--- Output diff ---
+2d1
+< test_files/file1.txt:1
+4d2
+< test_files/file2.txt:1
+s21_grep exit code: 0
+grep exit code: 0
+-------------------
+Test: Флаги -n и -o
+Command: -no test test_files/file1.txt
+[0;32mPASS[0m: Флаги -n и -o
+Exit codes match: 0
+Test: Флаги -h и -n
+Command: -hn test test_files/file1.txt test_files/file2.txt
+[0;31mFAIL[0m: Флаги -h и -n
+--- Output diff ---
+1,3c1,3
+< 3test 3: в нижнем регистре
+< 6test with multiple test words test
+< 3test lowercase in second file
+---
+> 3:test 3: в нижнем регистре
+> 6:test with multiple test words test
+> 3:test lowercase in second file
+s21_grep exit code: 0
+grep exit code: 0
+-------------------
+Test: Регулярное выражение .
+Command: 't.st' test_files/file1.txt
+[0;32mPASS[0m: Регулярное выражение .
+Exit codes match: 0
+Test: Регулярное выражение с ^
+Command: '^test' test_files/file1.txt
+[0;32mPASS[0m: Регулярное выражение с ^
+Exit codes match: 0
+Test: Регулярное выражение с []
+Command: '[ТT]est' test_files/file1.txt
+[1;33mWARN[0m: Регулярное выражение с [] - exit codes differ (s21: 0, grep: 1)
+s21_grep exit code: 0
+grep exit code: 1

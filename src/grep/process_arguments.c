@@ -14,8 +14,16 @@ int process_arguments(GrepOptions* options, int argc, char** argv) {
         return 1;
     }
 
+    if (!compile_regex(options)) {
+        if (!options->silent_mode) {
+            fprintf(stderr, "Недопустимый шаблон регулярного выражения\n");
+        }
+        return 1;
+    }
+
     // Определяем, сколько файлов будет обрабатываться
     int file_count = argc - optind;
+    options->file_count = file_count;
 
     // Если указан только один файл, по умолчанию не выводим имя файла
     if (file_count == 1 && !options->no_filename) {

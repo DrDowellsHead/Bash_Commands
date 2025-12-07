@@ -1,8 +1,0 @@
-Hello.world
-Hello-world
-Hello_world
-Hello@world
-email@example.com
-phone: 123-456-7890
-path/to/file.txt
-C:\Windows\System32

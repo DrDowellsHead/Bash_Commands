@@ -50,8 +50,8 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    process_arguments(&options, argc, argv);
+    int result = process_arguments(&options, argc, argv);
     cleanup_options(&options);
 
-    return 0;
+    return result;
 }

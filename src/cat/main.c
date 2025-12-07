@@ -14,6 +14,21 @@ int main(int argc, char* argv[]) {
 
     // Обработка флагов. Если нет флагов, то getopt возвращает -1, а optind
     // указыввает на следующую строку после всех аргументов
+    // optind изначально равен 1. Если ./s21_cat -b -n file1.txt file2.txt :
+    // argc = 
+    // optind = 1
+    // arg = argv[1] = "-b"
+        // Начинается с '-', не "--" → флаг
+        // Обрабатываем 'b', optind = 2
+
+    // arg = argv[1] = "-n"
+        // Начинается с '-', не "--" → флаг
+        // Обрабатываем 'n', optind = 3
+
+    // arg = argv[1] = "file1.txt"
+        // НЕ начинается с '-' → НЕ флаг!
+        // Прекращаем обработку, optind остается = 3
+
     while ((flag = getopt(argc, argv, "benstET")) != -1) {
         switch (flag) {
             case 'b':
