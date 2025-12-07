@@ -13,24 +13,19 @@ void print_line(const char* filename, int line_num, const char* line,
 
     int print_filename = 0;
 
-    if (filename) {
-        // По умолчанию имя файла выводится только для нескольких файлов
-        // или если явно не указан флаг -h
-        if (!options->no_filename) {
+    if (filename && !options->no_filename) {
+        // Выводим имя файла только для нескольких файлов
+        if (options->file_count > 1) {
             print_filename = 1;
         }
     }
 
     if (print_filename) {
-        printf("%s", filename);
-        if (options->line_number || options->only_matching) {
-            printf(":");
-        }
+        printf("%s:", filename);
     }
 
     if (options->line_number) {
-        printf("%d", line_num);
-        printf(":");
+        printf("%d:", line_num);
     }
 
     printf("%s", line);

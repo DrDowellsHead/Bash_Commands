@@ -1,1 +1,0 @@
-../utils/compare_results.sh: строка 16: 24560 Ошибка сегментирования                   (образ памяти сброшен на диск) ../../s21_grep "hello" ../test_files/empty.txt

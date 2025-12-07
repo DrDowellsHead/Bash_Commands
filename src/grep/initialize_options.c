@@ -15,6 +15,8 @@ void initialize_options(GrepOptions* options) {
     options->pattern_flag = 0;
     options->patterns = NULL;
     options->pattern_count = 0;
+    options->regexes = NULL;
+    options->regex_compiled = 0;
 }
 
 void cleanup_options(GrepOptions* options) {
@@ -22,4 +24,6 @@ void cleanup_options(GrepOptions* options) {
         free(options->patterns[i]);
     }
     free(options->patterns);
+
+    free_regex(options);
 }

@@ -8,7 +8,6 @@
 void handle_l_flag(GrepOptions* options) {
     options->files_with_matches = 1;
     // При флаге -l всегда выводим имена файлов, даже для одного файла
-    options->no_filename = 0;
 }
 
 void print_filename(const char* filename, GrepOptions* options) {

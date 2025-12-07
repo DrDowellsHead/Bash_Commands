@@ -1,0 +1,86 @@
+Тестовый прогон: Пн 08 дек 2025 00:28:38 MSK
+=========================
+Test: Простой поиск
+Command: test test_files/file1.txt
+[0;32mPASS[0m: Простой поиск
+Exit codes match: 0
+Test: Поиск нескольких файлов
+Command: test test_files/file1.txt test_files/file2.txt
+[0;32mPASS[0m: Поиск нескольких файлов
+Exit codes match: 0
+Test: Флаг -i (игнорировать регистр)
+Command: -i TEST test_files/file1.txt
+[0;32mPASS[0m: Флаг -i (игнорировать регистр)
+Exit codes match: 0
+Test: Флаг -v (инвертировать)
+Command: -v test test_files/file1.txt
+[0;32mPASS[0m: Флаг -v (инвертировать)
+Exit codes match: 0
+Test: Флаг -c (количество)
+Command: -c test test_files/file1.txt
+[0;32mPASS[0m: Флаг -c (количество)
+Exit codes match: 0
+Test: Флаг -l (только имена файлов)
+Command: -l test test_files/file1.txt test_files/file2.txt
+[0;32mPASS[0m: Флаг -l (только имена файлов)
+Exit codes match: 0
+Test: Флаг -n (номера строк)
+Command: -n test test_files/file1.txt
+[0;32mPASS[0m: Флаг -n (номера строк)
+Exit codes match: 0
+Test: Флаг -h (без имен файлов)
+Command: -h test test_files/file1.txt test_files/file2.txt
+[0;32mPASS[0m: Флаг -h (без имен файлов)
+Exit codes match: 0
+Test: Флаг -s (тихий режим)
+Command: -s pattern test_files/nonexistent.txt
+[0;32mPASS[0m: Флаг -s (тихий режим)
+Exit codes match: 2
+Test: Флаг -e (шаблон)
+Command: -e test test_files/file1.txt
+[0;32mPASS[0m: Флаг -e (шаблон)
+Exit codes match: 0
+Test: Флаг -f (шаблоны из файла)
+Command: -f test_files/patterns.txt test_files/file1.txt
+[0;32mPASS[0m: Флаг -f (шаблоны из файла)
+Exit codes match: 0
+Test: Флаг -o (только совпадения)
+Command: -o test test_files/file1.txt
+[0;32mPASS[0m: Флаг -o (только совпадения)
+Exit codes match: 0
+Test: Флаги -i и -v
+Command: -iv TEST test_files/file1.txt
+[0;32mPASS[0m: Флаги -i и -v
+Exit codes match: 0
+Test: Флаги -n и -i
+Command: -ni test test_files/file1.txt
+[0;32mPASS[0m: Флаги -n и -i
+Exit codes match: 0
+Test: Флаги -c и -v
+Command: -cv test test_files/file1.txt
+[0;32mPASS[0m: Флаги -c и -v
+Exit codes match: 0
+Test: Флаги -l и -c
+Command: -cl test test_files/file1.txt test_files/file2.txt
+[0;32mPASS[0m: Флаги -l и -c
+Exit codes match: 0
+Test: Флаги -n и -o
+Command: -no test test_files/file1.txt
+[0;32mPASS[0m: Флаги -n и -o
+Exit codes match: 0
+Test: Флаги -h и -n
+Command: -hn test test_files/file1.txt test_files/file2.txt
+[0;32mPASS[0m: Флаги -h и -n
+Exit codes match: 0
+Test: Регулярное выражение .
+Command: 't.st' test_files/file1.txt
+[0;32mPASS[0m: Регулярное выражение .
+Exit codes match: 0
+Test: Регулярное выражение с ^
+Command: '^test' test_files/file1.txt
+[0;32mPASS[0m: Регулярное выражение с ^
+Exit codes match: 0
+Test: Регулярное выражение с []
+Command: '[ТT]est' test_files/file1.txt
+[0;32mPASS[0m: Регулярное выражение с []
+Exit codes match: 1
