@@ -3,14 +3,15 @@
 
 // Структура для работы с флагами команды cat
 typedef struct {
-    int numbering_non_empty;  // flag b
-    int symbols_end_line;     // flag e
-    int numbering_all_str;    // flag n
-    int compession_str;       // flag s
-    int view_tabs;            // flag t
+  int numbering_non_empty;  // flag b
+  int symbols_end_line;     // flag e
+  int numbering_all_str;    // flag n
+  int compession_str;       // flag s
+  int view_tabs;            // flag t
 } CatOption;
 
-void file_read(const char* filename, CatOption* options, int* line_number, int* last_empty);
+void file_read(const char* filename, CatOption* options, int* line_number,
+               int* last_empty);
 int numbering_non_empty(char* line, CatOption* options, int* line_number);
 int symbols_end_line(char* line, CatOption* options);
 int numbering_all_str(char* line, CatOption* options, int* line_number);

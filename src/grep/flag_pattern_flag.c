@@ -8,13 +8,13 @@
 // grep -e "Agarwal"-e "Aggarwal" -e "Agrawal" geekfile.txt.
 
 void add_pattern(GrepOptions* options, const char* pattern) {
-    options->patterns = realloc(options->patterns,
-                                (options->pattern_count + 1) * sizeof(char*));
-    options->patterns[options->pattern_count] = strdup(pattern);
-    options->pattern_count++;
+  options->patterns =
+      realloc(options->patterns, (options->pattern_count + 1) * sizeof(char*));
+  options->patterns[options->pattern_count] = strdup(pattern);
+  options->pattern_count++;
 }
 
 void handle_e_flag(GrepOptions* options, const char* optarg) {
-    options->pattern_flag = 1;
-    add_pattern(options, optarg);
+  options->pattern_flag = 1;
+  add_pattern(options, optarg);
 }

@@ -31,22 +31,22 @@
 
 // Структура для работы с флагами команды grep
 typedef struct {
-    int ignore_case;         // Флаг -i
-    int invert_match;        // Флаг -v
-    int count_only;          // Флаг -c
-    int files_with_matches;  // Флаг -l
-    int line_number;         // Флаг -n
-    int no_filename;         // Флаг -h
-    int silent_mode;         // Флаг -s
-    int pattern_from_file;   // Флаг -f
-    int only_matching;       // Флаг -o
-    int pattern_flag;        // Флаг -e
-    int file_count;          // Количество обрабатываемых файлов
+  int ignore_case;         // Флаг -i
+  int invert_match;        // Флаг -v
+  int count_only;          // Флаг -c
+  int files_with_matches;  // Флаг -l
+  int line_number;         // Флаг -n
+  int no_filename;         // Флаг -h
+  int silent_mode;         // Флаг -s
+  int pattern_from_file;   // Флаг -f
+  int only_matching;       // Флаг -o
+  int pattern_flag;        // Флаг -e
+  int file_count;  // Количество обрабатываемых файлов
 
-    char** patterns;
-    int pattern_count;
-    regex_t* regexes;
-    int regex_compiled;
+  char** patterns;
+  int pattern_count;
+  regex_t* regexes;
+  int regex_compiled;
 } GrepOptions;
 
 // Для инициализации и очистки от опций
@@ -58,7 +58,8 @@ int process_arguments(GrepOptions* options, int argc, char** argv);
 int validate_patterns(GrepOptions* options);
 
 // Чтение файлов
-void file_read_grep(const char* filename, GrepOptions* options, int* any_match, int* any_error);
+void file_read_grep(const char* filename, GrepOptions* options, int* any_match,
+                    int* any_error);
 
 // Функции для флагов
 void handle_e_flag(GrepOptions* options, const char* optarg);

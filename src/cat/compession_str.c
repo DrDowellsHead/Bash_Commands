@@ -7,18 +7,18 @@
 // Сжимает несколько смежных пустых строк
 
 int compession_str(char* line, CatOption* options, int* last_empty) {
-    (void)options;
+  (void)options;
 
-    // Проверка на пустую строку
-    int is_empty = (line[0] == '\n' || line[0] == '\0');
+  // Проверка на пустую строку
+  int is_empty = (line[0] == '\n' || line[0] == '\0');
 
-    // Если шаблон пустой строки равен пустой строке, то выводим её
-    if (is_empty && *last_empty) {
-        return 0;
-    }
+  // Если шаблон пустой строки равен пустой строке, то выводим её
+  if (is_empty && *last_empty) {
+    return 0;
+  }
 
-    // Запоминаем состояние для следующей строки
-    *last_empty = is_empty;
+  // Запоминаем состояние для следующей строки
+  *last_empty = is_empty;
 
-    return 1;
+  return 1;
 }

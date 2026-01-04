@@ -7,14 +7,14 @@
 // Отображает символы конца строки как $
 
 int symbols_end_line(char* line, CatOption* options) {
-    (void)options;
+  (void)options;
 
-    size_t len = strlen(line);
+  size_t len = strlen(line);
 
-    if (len > 0 && line[len - 1] == '\n') {
-        line[len - 1] = '\0';
-        strcat(line, "$\n");
-    }
+  if (len > 0 && line[len - 1] == '\n') {
+    line[len - 1] = '\0';
+    strcat(line, "$\n");
+  }
 
-    return 0;
+  return 0;
 }
